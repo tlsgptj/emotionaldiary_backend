@@ -75,10 +75,15 @@ WSGI_APPLICATION = 'emotionalDiary.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'emotional',  # 데이터베이스 이름
+        'USER': 'postgres',     # PostgreSQL 사용자 이름
+        'PASSWORD': 'newpassword',  # 해당 사용자의 비밀번호
+        'HOST': 'localhost',  # 데이터베이스가 로컬에서 실행 중인 경우
+        'PORT': '5432',       # PostgreSQL 기본 포트
     }
 }
+
 
 
 # Password validation
