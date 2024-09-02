@@ -2,10 +2,12 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from Users import views
+from posts.views import EmotionViewSet
 
 # DRF의 DefaultRouter를 사용하여 뷰셋을 등록할 수 있습니다.
 router = DefaultRouter()
 router.register(r'Users', views.UserViewSet)
+router.register(r'emotions', EmotionViewSet, basename='emotion')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
