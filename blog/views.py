@@ -1,5 +1,4 @@
 import requests
-from bs4 import BeautifulSoup
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -13,32 +12,20 @@ class BlogPostsAPIView(APIView):
             return Response({"error": "URL is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            'Accept': 'application/json',  # JSON 형식의 응답을 요청
         }
 
         try:
             response = requests.get(url, headers=headers)
             response.raise_for_status()
 
-            # 데이터 확인 (디버깅을 위해 추가)
-            print(response.content)
+            # JSON 응답 처리
+            data = response.json()  # JSON 데이터를 파싱하여 Python 딕셔너리로 변환
 
-            # XML 파싱 시도
-            soup = BeautifulSoup(response.content, 'xml')
-            items = soup.find_all('item', limit=limit)
+            # 데이터 처리 예시 (limit 만큼 자르기)
+            blog_posts = data[:limit]  # limit 만큼의 데이터만 가져오기
 
-            # 파싱된 데이터를 담을 리스트
-            blog_posts = []
-            for item in items:
-                post = {
-                    "title": item.title.text if item.title else "No Title",
-                    "link": item.link.text if item.link else "No Link",
-                    "published": item.pubDate.text if item.pubDate else "No Date",
-                    "description": item.description.text if item.description else "No Description",
-                }
-                blog_posts.append(post)
-
-            # 응답 데이터 반환
             return Response(blog_posts, status=status.HTTP_200_OK)
 
         except requests.exceptions.HTTPError as http_err:
