@@ -13,7 +13,7 @@ CustomUser = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'birthday']  # 원하는 필드를 지정하세요
+        fields = ['id', 'email']  # 원하는 필드를 지정하세요
 
 
 class RegistrationUserSerializer(serializers.ModelSerializer):
@@ -22,7 +22,7 @@ class RegistrationUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'password2', 'birthday']
+        fields = ['email', 'password', 'password2']
         extra_kwargs = {
             'password': {'write_only': True},
         }
@@ -34,7 +34,6 @@ class RegistrationUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password2')
-        birthday = validated_data.pop('birthday')
 
         user = User(
             email=validated_data['email']
@@ -43,7 +42,7 @@ class RegistrationUserSerializer(serializers.ModelSerializer):
         user.save()
 
         # UserProfile에 생일 저장
-        UserProfile.objects.create(user=user, birthday=birthday)
+        UserProfile.objects.create(user=user)
 
         return user
 
