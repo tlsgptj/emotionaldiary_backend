@@ -25,11 +25,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Users',
     'posts',
     'predict',
     'rest_framework',
     'rest_framework.authtoken',
+    'Users.apps.UsersConfig',
 ]
 
 REST_FRAMEWORK = {
@@ -51,6 +51,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'Users.backends.EmailAuthBackend',  # 커스텀 백엔드 추가
+    'django.contrib.auth.backends.ModelBackend',  # 기본 백엔드 유지
+]
+
+
 ROOT_URLCONF = 'emotionalDiary.urls'
 
 TEMPLATES = [
@@ -68,6 +74,9 @@ TEMPLATES = [
         },
     },
 ]
+
+# settings.py
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 WSGI_APPLICATION = 'emotionalDiary.wsgi.application'
 
@@ -119,6 +128,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+AUTH_USER_MODEL = 'Users.CustomUser'
 
 
 # Static files (CSS, JavaScript, Images)

@@ -7,6 +7,7 @@ from Users.serializers import LoginSerializer, RegistrationUserSerializer
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 from Users.serializers import UserSerializer
+from rest_framework.permissions import AllowAny
 
 CustomUser = get_user_model()
 
@@ -15,6 +16,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 class RegisterAPIView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         serializer = RegistrationUserSerializer(data=request.data)
         if serializer.is_valid():

@@ -1,12 +1,6 @@
-from django.contrib.auth.models import User
-from rest_framework import serializers
-from django.contrib.auth import authenticate
-from rest_framework import serializers
-from django.contrib.auth.models import User
-from rest_framework import serializers
-from Users.models import UserProfile
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from django.contrib.auth import authenticate
 
 CustomUser = get_user_model()
 
@@ -18,10 +12,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 class RegistrationUserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
-    birthday = serializers.DateField(write_only=True)
 
     class Meta:
-        model = User
+        model = CustomUser  # CustomUser 모델 사용
         fields = ['email', 'password', 'password2']
         extra_kwargs = {
             'password': {'write_only': True},
@@ -35,16 +28,14 @@ class RegistrationUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('password2')
 
-        user = User(
+        user = CustomUser(
             email=validated_data['email']
         )
-        user.set_password(validated_data['password'])
+        user.set_password(validated_data['password'])  # 비밀번호 해싱
         user.save()
 
-        # UserProfile에 생일 저장
-        UserProfile.objects.create(user=user)
-
         return user
+
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -54,7 +45,7 @@ class LoginSerializer(serializers.Serializer):
         email = data.get('email')
         password = data.get('password')
 
-        # 사용자가 있는지 확인하고, 인증 시도
+        # 이메일을 username으로 사용하여 인증 시도
         user = authenticate(username=email, password=password)
         if user is None:
             raise serializers.ValidationError('이메일 또는 비밀번호가 올바르지 않습니다.')
