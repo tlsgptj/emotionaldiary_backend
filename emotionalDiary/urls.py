@@ -14,6 +14,6 @@ urlpatterns = [
     path('api/', include(router.urls)),  
     path('emotions/create/', CreateEmotionAPIView.as_view(), name='create'),
     path('emotions/list/', EmotionListAPIView.as_view(), name='list'),
-    path('api/register/', RegisterAPIView.as_view(), name='register'),  
-    path('api/login/', LoginAPIView.as_view(), name='login'),  
+    path('register/', RegisterAPIView.as_view(), name='register'),  
+    path('login/', LoginAPIView.as_view(), name='login'),  
 ]
