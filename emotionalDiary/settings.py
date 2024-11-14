@@ -131,7 +131,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = 'Users.CustomUser'
 
 
 # Static files (CSS, JavaScript, Images)

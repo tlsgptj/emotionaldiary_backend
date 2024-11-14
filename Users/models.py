@@ -1,34 +1,18 @@
 # Users/models.py
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import User
 from django.db import models
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('이메일 주소는 필수입니다.')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        return self.create_user(email, password, **extra_fields)
-
-
-class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
-    username = models.CharField(max_length=30, blank=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-
-    objects = CustomUserManager()
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+class UserProfile(models.Model):
+    # 기본 User 모델과의 OneToOne 관계
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    additional_field = models.CharField(max_length=100, blank=True)
+    
+    # 추가 필드
+    email = models.EmailField(unique=True)  # 이메일 필드
+    username = models.CharField(max_length=30, blank=True)  # 사용자 이름 필드
+    is_active = models.BooleanField(default=True)  # 활성 상태
+    is_staff = models.BooleanField(default=False)  # 스태프 여부
 
     def __str__(self):
-        return self.email
+        return self.user.username
 
