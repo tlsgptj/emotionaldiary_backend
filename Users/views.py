@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from .serializers import UserSerializer
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 
 class RegisterAPIView(APIView):
     permission_classes = [AllowAny]
@@ -51,3 +52,13 @@ class LoginAPIView(APIView):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class LogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            request.user.auth_token.delete()
+            return Response({"message": "로그아웃 성공"}, status=status.HTTP_200_OK)
+        except Token.DoesNotExist:
+            return Response({"error": "유효하지 않은 토큰입니다."}, status=status.HTTP_400_BAD_REQUEST)
