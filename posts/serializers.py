@@ -4,4 +4,4 @@ from .models import Emotion
 class EmotionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Emotion
-        fields = ['date', 'emotions', 'content']
+        fields = ['date', 'emotions', 'content', 'advice']
