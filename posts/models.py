@@ -6,8 +6,8 @@ class Emotion(models.Model):
     date = models.DateTimeField(auto_now_add=True)  # 자동으로 현재 시간 설정
     emotions = models.CharField(max_length=255)
     content = models.TextField()
-    advice = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.emotions} on {self.date}"
 
+#데이터를 동기화 하는 방법으로 처리가 가능함
