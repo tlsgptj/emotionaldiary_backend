@@ -14,7 +14,7 @@ class Locations(models.Model):
           related_name="conversation_locations"
      )
      user_Locations = models.TextField()
-     timestamp = models.DateTimeField(auto_now_add=True)
+     timestamp = models.DateTimeField(auto_now_add=True) #현재 시간말고 작성한 시간으로 변경
 
      def __str__(self):
           return f"Location for Conversation {self.conversations.id}"
