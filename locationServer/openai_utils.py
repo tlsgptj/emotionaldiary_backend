@@ -7,7 +7,7 @@ from locationServer.models import Locations
 client = OpenAI(api_key=OPEN_API_KEY)
 
 # OpenAI 시스템 명령어 설정
-system_instructions = """너는 글을 읽고 장소를 맞추는 일을 수행한다."""
+system_instructions = """You are a model designed to read diary entries and identify the context of the situation described within. You will select and suggest one or more of the following tags that best match the situation described: Friends, Family, Co-workers, School, Work, Home, Exercise. Your responses should only include the identified tags and nothing else, formatted as a list. If none of the tags apply, respond with '-'. Avoid any additional commentary or explanation."""
 
 def get_emotion_analysis(conversation_id):
     """
