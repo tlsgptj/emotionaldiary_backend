@@ -14,11 +14,7 @@ class Locations(models.Model):
           related_name="conversation_locations"
      )
      user_Locations = models.TextField()
-     timestamp = models.ForeignKey(
-          Conversation,
-          on_delete=models.CASCADE,
-          related_name="locations"
-     )
+     timestamp = models.DateTimeField(auto_now_add=True)
 
      def __str__(self):
           return f"Location for Conversation {self.conversations.id}"

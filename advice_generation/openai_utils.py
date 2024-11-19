@@ -1,9 +1,8 @@
 from openai import OpenAI
-from advice_generation.config import config
+from advice_generation.config import OPEN_API_KEY
 from models import Conversation
-import config
 
-client = OpenAI(api_key=config.OPEN_API_KEY)
+client = OpenAI(api_key=OPEN_API_KEY)
 #명령을 입력하는 로직인것 같음
 system_instructions = """너는 감정상담사이고, 글을 쓰면 그 사람이 감동을 받을 수 있게 조언을 해주는 역할을 한다."""
 
