@@ -155,8 +155,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-OPEN_API_KEY = "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"
-
 
 
 # Static files (CSS, JavaScript, Images)
