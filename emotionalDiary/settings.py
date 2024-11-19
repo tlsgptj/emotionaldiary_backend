@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'dj_rest_auth',
     'posts',
+    'wordCloud',
     'emotion_analytics',
     'locationServer',
     'advice_generation',
