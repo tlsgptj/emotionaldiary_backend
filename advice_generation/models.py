@@ -5,7 +5,7 @@ class Conversation(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="conversations"
+        related_name="user_conversations"
     )
 
     user_input = models.TextField()
