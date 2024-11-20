@@ -15,9 +15,9 @@ class wordCloud(models.Model):
         related_name="wordCloud_conversations"
     )
 
-    word = models.TextField() #모델이랑 연결이 필요함
+    word = models.CharField(max_length=255) 
 
-    often = models.TextField() #글자의 빈도를 추출해야함
+    often = models.IntegerField() #글자의 빈도를 추출해야함
 
     timestamp = models.DateTimeField(auto_now_add=True)
 
